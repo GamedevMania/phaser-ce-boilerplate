@@ -3,6 +3,10 @@
   "version": "0.0.1",
   "description": "Template for Phaser Community Edition",
   "main": "./src/main.js",
+  "repository": { 
+    "type" : "git",
+    "url" : "https://github.com/GamedevMania/phaser-ce-boilerplate.git"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server --open",

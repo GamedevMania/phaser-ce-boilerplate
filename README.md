@@ -22,7 +22,7 @@
 - You can change the paths and other settings in config.js.
 
 ## License
-This boilerplate is distributed on MIT license.
+This boilerplate is distributed on [MIT license](./LICENSE).
 
 ---
 Visit [gamedevmania.com](http://gamedevmania.com)

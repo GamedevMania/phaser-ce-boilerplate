@@ -1,6 +1,6 @@
 {
   "name": "phaser-ce-boilerplate",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Template for Phaser Community Edition",
   "main": "./src/main.js",
   "repository": { 

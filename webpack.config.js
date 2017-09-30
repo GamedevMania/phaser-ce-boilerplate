@@ -1,3 +1,4 @@
+const CONFIG = require('./config');
 const path = require('path');
 const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
@@ -6,27 +7,27 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
-    entry: './src/index.js',
+    entry: CONFIG.MAIN_FILE,
     devtool: 'inline-source-map',
     devServer: {
-         contentBase: './build',
+         contentBase: CONFIG.BUILD_PATH,
          compress: true,
     },
     plugins: [
         new UglifyJSPlugin(),
-        new CleanWebpackPlugin(['build']),
+        new CleanWebpackPlugin([CONFIG.BUILD_PATH]),
         new CopyWebpackPlugin([
-            { from: './node_modules/phaser-ce/build/phaser.min.js' },
-            { from: 'src/assets', to: 'assets' }
+            { from: CONFIG.PHASER_PATH },
+            { from: CONFIG.ASSETS_PATH, to: 'assets' }
         ]),
         new HtmlWebpackPlugin({
-            title: 'Phaser Community Edition Boilerplate',
-            template: 'src/index.ejs'
+            title: CONFIG.GAME_TITLE,
+            template: CONFIG.INDEX_TEMPLATE_FILE
         })
     ],
     output: {
-        filename: 'game.js',
-        path: path.resolve(__dirname, 'build')
+        filename: CONFIG.OUTPUT_FILE,
+        path: path.resolve(__dirname, CONFIG.BUILD_PATH)
     },
     module: {
         rules: [

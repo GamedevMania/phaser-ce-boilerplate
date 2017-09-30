@@ -12,6 +12,6 @@
 `npm start`
 
 ### Build your game
-`npm build`
+`npm run build`
 
 Visit [gamedevmania.com](http://gamedevmania.com)

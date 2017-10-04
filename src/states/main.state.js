@@ -3,7 +3,7 @@ import LogoImage from '../objects/logo.image';
 class MainState extends Phaser.State {
 
     preload() {
-        this.load.image('gamedevmania-logo', 'assets/images/gamedevmania-logo.png');
+        
     }
 
     create() {

@@ -1,11 +1,14 @@
+import WebpackLoader from 'phaser-webpack-loader';
+import AssetManifest from '../AssetManifest';
+
 class PreloadState extends Phaser.State {
 
-    preload() {
-
-    }
-
     create() {
-        this.state.start('MainState');
+        this.game.plugins.add(WebpackLoader, AssetManifest)
+        .load()
+        .then(() => {
+          this.game.state.start('MainState');
+        });
     }
 }
 

@@ -12,9 +12,6 @@ module.exports = {
     },
     plugins: [
         new CleanWebpackPlugin([CONFIG.BUILD_PATH]),
-        new CopyWebpackPlugin([
-            { from: CONFIG.ASSETS_PATH, to: 'assets' }
-        ]),
         new HtmlWebpackPlugin({
             title: CONFIG.GAME_TITLE,
             template: CONFIG.INDEX_TEMPLATE_FILE
@@ -34,9 +31,10 @@ module.exports = {
     },
     resolve: {
         alias: {
-            "phaser": "phaser-ce/build/custom/phaser-split.js",
-            "pixi": "phaser-ce/build/custom/pixi.js",
-            "p2": 'phaser-ce/build/custom/p2.js'
+            'phaser': 'phaser-ce/build/custom/phaser-split.js',
+            'pixi': 'phaser-ce/build/custom/pixi.js',
+            'p2': 'phaser-ce/build/custom/p2.js',
+            'assets': path.join(__dirname, '/src/assets'),
         },
         modules: [
             path.resolve('./node_modules')
@@ -44,28 +42,33 @@ module.exports = {
     },
     module: {
         rules: [
-        {
-            test: /\.js$/,
-            exclude: /(node_modules)/,
-            use: {
-                loader: 'babel-loader',
-                options: {
-                    presets: ['env']
+            {
+                test: /\.js$/,
+                exclude: /node_modules\/(?!phaser-webpack-loader)/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['env'],
+                        compact: false
+                    }
                 }
-            }
-        },
-        { 
-            test: /pixi\.js/, 
-            use: ['expose-loader?PIXI'] 
-        },
-        { 
-            test: /phaser-split\.js$/, 
-            use: ['expose-loader?Phaser'] 
-        },
-        { 
-            test: /p2\.js/, 
-            use: ['expose-loader?p2'] 
-        }
+            },
+            { 
+                test: /pixi\.js/, 
+                use: ['expose-loader?PIXI'] 
+            },
+            { 
+                test: /phaser-split\.js$/, 
+                use: ['expose-loader?Phaser'] 
+            },
+            { 
+                test: /p2\.js/, 
+                use: ['expose-loader?p2'] 
+            },
+            {
+                test: /\.(png|jpg|gif|svg|pvr|pkm)$/,
+                use: ['file-loader?name=assets/[name].[ext]?[hash]'],
+            },
         ]
     }
 };

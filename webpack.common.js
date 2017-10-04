@@ -44,7 +44,7 @@ module.exports = {
         rules: [
             {
                 test: /\.js$/,
-                exclude: /node_modules\/(?!phaser-webpack-loader)/,
+                exclude: /node_modules/,
                 use: {
                     loader: 'babel-loader',
                     options: {
@@ -67,7 +67,11 @@ module.exports = {
             },
             {
                 test: /\.(png|jpg|gif|svg|pvr|pkm)$/,
-                use: ['file-loader?name=assets/[name].[ext]?[hash]'],
+                loader: 'file-loader',
+                options: {
+                    name: 'assets/[path][name].[ext]?[hash]',
+                    context: 'src/assets'
+                }
             },
         ]
     }

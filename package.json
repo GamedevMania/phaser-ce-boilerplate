@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "phaser-ce": "^2.8.8",
-    "phaser-webpack-loader": "^1.0.2",
+    "phaser-manifest-loader": "^2.1.0",
     "webfontloader": "^1.6.28"
   }
 }

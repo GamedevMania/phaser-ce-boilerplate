@@ -1,6 +1,6 @@
 const AssetManifest = {
     images: [
-        'gamedevmania-logo.png'
+        'gamedevmania-logo'
     ]
 };
 

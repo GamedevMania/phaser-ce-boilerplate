@@ -1,14 +1,17 @@
-import WebpackLoader from 'phaser-webpack-loader';
+import ManifestLoader from 'phaser-manifest-loader'
 import AssetManifest from '../AssetManifest';
+
+const req = require.context('../assets', true, /.*\.png|json|ttf|woff|woff2|xml|mp3|jpg$/);
 
 class PreloadState extends Phaser.State {
 
     create() {
-        this.game.plugins.add(WebpackLoader, AssetManifest)
-        .load()
-        .then(() => {
-          this.game.state.start('MainState');
-        });
+        this.manifestLoader = this.game.plugins.add(ManifestLoader, req)
+        Promise.all([
+          this.manifestLoader.loadManifest(AssetManifest)
+        ]).then(() => {
+          this.game.state.start('MainState')
+        })
     }
 }
 

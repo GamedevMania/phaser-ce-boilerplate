@@ -1,25 +1,46 @@
 const CONFIG = require('./config');
 const path = require('path');
+const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    entry: CONFIG.MAIN_FILE,
+    entry: {
+        game: CONFIG.MAIN_FILE,
+        vendor: ['pixi', 'p2', 'phaser', 'webfontloader']
+    },
     plugins: [
         new CleanWebpackPlugin([CONFIG.BUILD_PATH]),
         new CopyWebpackPlugin([
-            { from: CONFIG.PHASER_PATH },
             { from: CONFIG.ASSETS_PATH, to: 'assets' }
         ]),
         new HtmlWebpackPlugin({
             title: CONFIG.GAME_TITLE,
             template: CONFIG.INDEX_TEMPLATE_FILE
-        })
+        }),
+        new webpack.optimize.CommonsChunkPlugin({ 
+            name: 'vendor'
+        }),
     ],
     output: {
-        filename: CONFIG.OUTPUT_FILE,
+        filename: '[name].js',
         path: path.resolve(__dirname, CONFIG.BUILD_PATH)
+    },
+    node: {
+        fs: 'empty',
+        net: 'empty',
+        tls: 'empty'
+    },
+    resolve: {
+        alias: {
+            "phaser": "phaser-ce/build/custom/phaser-split.js",
+            "pixi": "phaser-ce/build/custom/pixi.js",
+            "p2": 'phaser-ce/build/custom/p2.js'
+        },
+        modules: [
+            path.resolve('./node_modules')
+        ]
     },
     module: {
         rules: [
@@ -32,6 +53,18 @@ module.exports = {
                     presets: ['env']
                 }
             }
+        },
+        { 
+            test: /pixi\.js/, 
+            use: ['expose-loader?PIXI'] 
+        },
+        { 
+            test: /phaser-split\.js$/, 
+            use: ['expose-loader?Phaser'] 
+        },
+        { 
+            test: /p2\.js/, 
+            use: ['expose-loader?p2'] 
         }
         ]
     }
